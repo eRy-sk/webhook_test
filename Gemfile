@@ -2,6 +2,7 @@ ruby '2.5.1'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.1.1'
 gem 'business_time'
+gem 'chatwork'
 gem 'coffee-rails', '~> 4.2'
 gem 'dotenv-rails'
 gem 'font-awesome-rails'

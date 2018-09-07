@@ -1,24 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+BotのAPIトークンの登録
+`ChatWork.api_key="<API_TOKEN>"`
+Botから特定のルームにメッセージ送信
+`$ ChatWork::Message.create(room_id: <room_id>, body: "Hello, ChatWork!")`
