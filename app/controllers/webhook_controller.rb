@@ -6,14 +6,12 @@ class WebhookController < ApplicationController
     redirect_to action: 'home'
   end
   def hook
+    User.create
     # ダイジェスト値をBASE64エンコードした文字列が、リクエストヘッダに付与された署名（`X-ChatWorkWebhookSignature`ヘッダ、もしくはリクエストパラメータ`chatwork_webhook_signature`の値）と一致することを確認
     if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
       render text: 'success', status: 200
-      ChatWork::Message.create(room_id: '122180676', body: "#{request.body.read}")
-      ChatWork::Message.create(room_id: '122180676', body: '送信できてないよ')
     else
       render text: 'invalid', status: 403
-      ChatWork::Message.create(room_id: '122180676', body: '失敗だよ')
     end
   end
 
