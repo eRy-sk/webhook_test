@@ -1,6 +1,6 @@
-require 'openssl'
-require 'base64'
 class WebhookController < ApplicationController
+  require 'openssl'
+  require 'base64'
   def home
   end
   def sendMessage
