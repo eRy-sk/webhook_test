@@ -16,7 +16,7 @@ class WebhookController < ApplicationController
   private
 
     def secret_key
-      token = '[トークン]'
+      token = ENV['CHATWORK_API_TOKEN']
       Base64.decode64(token)
     end
 
