@@ -2,17 +2,20 @@ class WebhookController < ApplicationController
   require 'openssl'
   require 'base64'
   protect_from_forgery :except => [:hook]
+
   def home
   end
-  def sendMessage
-    ChatWork::Message.create(room_id: ENV['ROOM_ID'], body: "どすこい")
+
+  def sendmessage
+    ChatWork::Message.create(room_id: ENV['ROOM_ID'], body: params[:body])
     redirect_to action: 'home'
   end
-  def hook
+
+  def webhook
     # ダイジェスト値をBASE64エンコードした文字列が、リクエストヘッダに付与された署名（`X-ChatWorkWebhookSignature`ヘッダ、もしくはリクエストパラメータ`chatwork_webhook_signature`の値）と一致することを確認
     if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
       body = JSON.parse(request.body.read, {:symbolize_names => true})
-      ChatWork::Message.create(room_id: '<送信ROOMID>', body: body[:webhook_event][:body])
+      ChatWork::Message.create(room_id: '<SEND_ROOM_ID>', body: body[:webhook_event][:body])
       head :ok
     else
       render text: 'invalid', status: 403
