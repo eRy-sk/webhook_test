@@ -12,7 +12,7 @@ class WebhookController < ApplicationController
     else
       render text: 'invalid', status: 403
     end
-    head :ok
+    # head :ok
   end
 
   private
