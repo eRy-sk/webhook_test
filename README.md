@@ -1,8 +1,12 @@
 # ChatWorkBot作成のための技術検証
+Rails 5.2  
+Ruby 2.5  
+Gem chatwork
 
 ## メッセージ送信
 `http://localhost:3000/`にアクセス  
-送信したいメッセージを入力し、submit  
+送信したいメッセージを入力し、送信
+ChatWorkへの送信処理
 [`ChatWork::Message.create(room_id: ENV['ROOM_ID'], body: "<送信内容>")`](https://github.com/eRy-sk/webhook_test/blob/master/app/controllers/webhook_controller.rb#L10)  
 
 ## 新規メッセージ受信時にトリガーしてメッセージ送信
