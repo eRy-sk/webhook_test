@@ -1,6 +1,7 @@
 class WebhookController < ApplicationController
   require 'openssl'
   require 'base64'
+  protect_from_forgery :except => [:hook]
   def home
   end
   def sendMessage
@@ -9,12 +10,12 @@ class WebhookController < ApplicationController
   end
   def hook
     # ダイジェスト値をBASE64エンコードした文字列が、リクエストヘッダに付与された署名（`X-ChatWorkWebhookSignature`ヘッダ、もしくはリクエストパラメータ`chatwork_webhook_signature`の値）と一致することを確認
-    #if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
+    if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
       User.create(name: request.body.read)
       render text: 'success', status: 200
-    #else
-    #  render text: 'invalid', status: 403
-    #end
+    else
+      render text: 'invalid', status: 403
+    end
     # head :ok
   end
 
