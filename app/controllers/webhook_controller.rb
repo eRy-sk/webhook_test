@@ -6,34 +6,36 @@ class WebhookController < ApplicationController
     redirect_to action: 'home'
   end
   def post
-    if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
-      render text: 'success', status: 200
-      render action: 'hook'
-      @request = request
-    else
-      render text: 'invalid', status: 403
-    end
-  end
-  def hook
-    @request
-  end
-
-  private
-
-    def secret_key
-      token = ENV['WEBHOOK_TOKEN']
-      Base64.decode64(token)
-    end
-
-    def request_body
-      request.body.read
-    end
-
-    def chatwork_signature
-      request.headers[:HTTP_X_CHATWORKWEBHOOKSIGNATURE]
-    end
-
-    def digest
-      OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), secret_key, request_body)
+    @request = request.body
+    render 'hook'
+  #   if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
+  #     @request = request
+  #     render 'hook'
+  #     render text: 'success', status: 200
+  #   else
+  #     render text: 'invalid', status: 403
+  #   end
+  # end
+  # def hook
+  #   @request
+  # end
+  #
+  # private
+  #
+  #   def secret_key
+  #     token = ENV['WEBHOOK_TOKEN']
+  #     Base64.decode64(token)
+  #   end
+  #
+  #   def request_body
+  #     request.body.read
+  #   end
+  #
+  #   def chatwork_signature
+  #     request.headers[:HTTP_X_CHATWORKWEBHOOKSIGNATURE]
+  #   end
+  #
+  #   def digest
+  #     OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), secret_key, request_body)
     end
 end
