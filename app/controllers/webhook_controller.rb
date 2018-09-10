@@ -5,12 +5,17 @@ class WebhookController < ApplicationController
     ChatWork::Message.create(room_id: ENV['ROOM_ID'], body: "どすこい")
     redirect_to action: 'home'
   end
-  def test
+  def post
     if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
       render text: 'success', status: 200
+      render action: 'hook'
+      @request = request
     else
       render text: 'invalid', status: 403
     end
+  end
+  def hook
+    @request
   end
 
   private
