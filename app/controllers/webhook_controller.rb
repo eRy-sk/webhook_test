@@ -8,11 +8,11 @@ class WebhookController < ApplicationController
   def hook
     # ダイジェスト値をBASE64エンコードした文字列が、リクエストヘッダに付与された署名（`X-ChatWorkWebhookSignature`ヘッダ、もしくはリクエストパラメータ`chatwork_webhook_signature`の値）と一致することを確認
     if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
-      # render text: 'success', status: 200
+      render text: 'success', status: 200
       puts JSON.parse(request.body.read, {:symbolize_names => true})
       ChatWork::Message.create(room_id: '122180676', body: "どすこい")
     else
-      # render text: 'invalid', status: 403
+      render text: 'invalid', status: 403
     end
     head :ok
   end
