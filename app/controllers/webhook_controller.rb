@@ -1,7 +1,7 @@
 class WebhookController < ApplicationController
   require 'openssl'
   require 'base64'
-  protect_from_forgery :except => [:hook]
+  protect_from_forgery :except => [:webhook]
 
   def home
   end
