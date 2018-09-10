@@ -41,7 +41,4 @@ class WebhookController < ApplicationController
       # 取得したHTTPSリクエストボディと秘密鍵をつかって、HMAC-SHA256アルゴリズムによりダイジェスト値を取得
       OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), secret_key, request_body)
     end
-    def request_params
-      @params ||= JSON.parse(request.body.read, {:symbolize_names => true})
-    end
 end
