@@ -8,7 +8,7 @@ class WebhookController < ApplicationController
   def hook
     if chatwork_signature.present? && chatwork_signature == Base64.strict_encode64(digest)
       @request = request.body.read
-      render text: 'success', status: 200
+      #render text: 'success', status: 200
     else
       render text: 'invalid', status: 403
     end
